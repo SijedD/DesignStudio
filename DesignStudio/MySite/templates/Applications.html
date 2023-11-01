@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+
+<h1>Title: {{ Applications.title }}</h1>
+
+<img src="{{MEDIA_URL}}{{ Forest.jpg }}" alt="продукт">
+<p><strong>Summary:</strong> {{ Applications.deck }}</p>
+<p><strong>Language:</strong> {{ Applications.category }}</p>

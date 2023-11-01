@@ -4,12 +4,18 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from .forms import RegisterUserForm
 from .models import Author
+from .models import Applications
 
 
 # Create your views here.
 
 def index(request):
-    return render(request, 'base.html')
+    Applications_title = Applications.objects.all()
+    Applications_deck = Applications.deck
+    Applications_category = Applications.category
+    return render(request, 'index.html', context={'Applications_title': Applications_title,
+                                                 'Applications_deck': Applications_deck,
+                                                 'Applications_category': Applications_category})
 
 
 class AuthorCreate(CreateView):
@@ -32,4 +38,3 @@ class RegisterView(CreateView):
     template_name = 'registration/register.html'
     form_class = RegisterUserForm
     success_url = reverse_lazy('login')
-

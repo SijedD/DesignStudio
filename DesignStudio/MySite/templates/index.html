@@ -8,15 +8,12 @@
 
 <p>The library has the following record counts:</p>
 <ul>
-  <li><strong>Books:</strong> {{ num_books }}</li>
-  <li><strong>Copies:</strong> {{ num_instances }}</li>
-  <li><strong>Copies available:</strong> {{ num_instances_available }}</li>
-  <li><strong>Authors:</strong> {{ num_authors }}</li>
+    <li><h1>Title: {{ Applications_title }}</h1></li>
+    <li><img src="{{MEDIA_URL}}{{ Forest.jpg }}" alt="продукт"></li>
+    <li><p><strong>Summary:</strong> {{ Applications_deck }}</p></li>
+    <li><p><strong>Language:</strong> {{ Applications_category }}</p></li>
 </ul>
 
-<p>
-  You have visited this page {{ num_visits }}{% if num_visits == 1 %} time{%
-  else %} times{% endif %}.
-</p>
+
 
 {% endblock %}

@@ -129,3 +129,5 @@ from django.core.management.commands.runserver import Command as runserver
 runserver.default_port = "8080"
 
 LOGIN_REDIRECT_URL = '/'
+
+MEDIA_URL = '/media/'
