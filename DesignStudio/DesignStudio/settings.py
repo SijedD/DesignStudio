@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'MySite',
+    'bootstrap4',
     'django.contrib.admin',
 ]
 
@@ -124,9 +125,13 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+AUTH_USER_MODEL = 'MySite.AdvUser'
+
 from django.core.management.commands.runserver import Command as runserver
 
 runserver.default_port = "8080"
+runserver.default_addr = "localhost"
+
 
 LOGIN_REDIRECT_URL = '/'
 

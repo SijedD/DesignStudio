@@ -1,24 +1,18 @@
 from django.db import models
-from django.urls import reverse
+from django.contrib.auth.models import AbstractUser
 
 
-class Author(models.Model):
-    """Model representing an author."""
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    date_of_birth = models.DateField(null=True, blank=True)
-    date_of_death = models.DateField('died', null=True, blank=True)
+class AdvUser(AbstractUser):
+    name = models.CharField(max_length=250, verbose_name="ФИО", help_text="Только кириллические буквы, дефис и пробелы")
+    username = models.CharField(max_length=35, verbose_name="Логин", unique=True,
+                                help_text="Только латиница и дефис, уникальный")
+    is_activated = models.BooleanField(default=True, db_index=True,
+                                       verbose_name='Согласен с обработкой '
+                                                    'персональных данных?')
 
-    class Meta:
-        ordering = ['last_name', 'first_name']
 
-    def get_absolute_url(self):
-        """Returns the url to access a particular author instance."""
-        return reverse('author-detail', args=[str(self.id)])
-
-    def __str__(self):
-        """String for representing the Model object."""
-        return '{0}, {1}'.format(self.last_name, self.first_name)
+class Meta(AbstractUser.Meta):
+    pass
 
 
 class Category(models.Model):
@@ -34,3 +28,6 @@ class Applications(models.Model):
     deck = models.TextField(max_length=1000, default='something')
     category = models.ForeignKey('category', on_delete=models.SET_NULL, null=True)
     image = models.ImageField(upload_to='')
+
+    def __str__(self):
+        return self.title
