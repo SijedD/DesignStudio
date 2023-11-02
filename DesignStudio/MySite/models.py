@@ -1,3 +1,5 @@
+from django.core.exceptions import ValidationError
+from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
@@ -23,11 +25,30 @@ class Category(models.Model):
         return self.name
 
 
+
+
 class Applications(models.Model):
+    def validate_image(fieldfile_obj):
+        filesize = fieldfile_obj.file.size
+        megabyte_limit = 2.0
+        if filesize > megabyte_limit * 1024 * 1024:
+            raise ValidationError("Max file size is %sMB" % str(megabyte_limit))
     title = models.CharField(max_length=100)
     deck = models.TextField(max_length=1000, default='something')
     category = models.ForeignKey('category', on_delete=models.SET_NULL, null=True)
-    image = models.ImageField(upload_to='')
+    image = models.ImageField(upload_to="media/", verbose_name="Фотография",
+                              help_text="Разрешается формата файла только jpg, jpeg, png, bmp",
+                              validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'bmp']),validate_image])
+    REQUEST_STATUS = (
+        ('Новая', 'Новая'),
+        ('Принято в работу', 'Принято в работу'),
+        ('Выполнено', 'Выполнено'),
+    )
+    Status = models.CharField(
+        max_length=16,
+        default='Новая',
+        blank=True,
+        verbose_name="Статус")
 
     def __str__(self):
         return self.title
