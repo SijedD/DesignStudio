@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.core.exceptions import ValidationError
 from django.core.validators import FileExtensionValidator
 from django.db import models
@@ -36,6 +38,8 @@ class Applications(models.Model):
     title = models.CharField(max_length=100)
     deck = models.TextField(max_length=1000, default='something')
     category = models.ForeignKey('category', on_delete=models.SET_NULL, null=True)
+    date_create = models.DateField(default=datetime.now(), verbose_name="Дата создания")
+    time_create = models.TimeField(default=datetime.now(), verbose_name="Время создания")
     image = models.ImageField(upload_to="media/", verbose_name="Фотография",
                               help_text="Разрешается формата файла только jpg, jpeg, png, bmp",
                               validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'bmp']),validate_image])

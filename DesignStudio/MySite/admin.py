@@ -10,5 +10,5 @@ admin.site.register(AdvUser)
 
 @admin.register(Applications)
 class ApplicationsAdmin(admin.ModelAdmin):
-    list_display = ('title', 'deck', 'category', 'Status')
+    list_display = ('title', 'deck', 'category', 'date_create', 'time_create', 'Status')
     model = Applications
