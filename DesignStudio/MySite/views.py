@@ -58,5 +58,5 @@ class ApplicationsCreate(LoginRequiredMixin, CreateView):
 
 class ApplicationsDelete(DeleteView):
     model = Applications
-    success_url = reverse_lazy('Applications')
-    permission_required = 'MySite.can_mark_returned'
+    success_url = reverse_lazy('applicationByUserListView')
+    context_object_name = 'application'
