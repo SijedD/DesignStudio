@@ -8,4 +8,5 @@ urlpatterns = [
     path('login/', UserLoginView.as_view(), name='login'),
     path('Applications/create/', views.ApplicationsCreate.as_view(), name='Applications-create'),
     path('Applications/<int:pk>/delete/', views.ApplicationsDelete.as_view(), name='Applications-delete'),
+    path('applications/', views.applicationByUserListView.as_view(), name='applicationByUserListView')
 ]

@@ -54,6 +54,7 @@ class Applications(models.Model):
         default='Новая',
         blank=True,
         verbose_name="Статус")
+    borrower = models.ForeignKey(AdvUser, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.title

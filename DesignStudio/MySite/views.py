@@ -6,7 +6,7 @@ from django.views.generic.edit import DeleteView
 from .forms import *
 from .models import Applications
 from django.views import generic
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 
 
 # Create your views here.
@@ -37,13 +37,26 @@ class UserLoginView(LoginView):
     success_url = 'index.html'
 
 
-class ApplicationsCreate(PermissionRequiredMixin, CreateView):
+class applicationByUserListView(LoginRequiredMixin, generic.ListView):
     model = Applications
-    fields = ['title', 'deck', 'category', 'date_create', 'time_create', 'Status']
-    permission_required = 'MySite.can_mark_returned'
+    template_name = 'MySite/application_list_user.html'
+    context_object_name = 'applications'
+
+    def get_queryset(self):
+        return Applications.objects.filter(borrower=self.request.user)
 
 
-class ApplicationsDelete(PermissionRequiredMixin, DeleteView):
+class ApplicationsCreate(LoginRequiredMixin, CreateView):
+    model = Applications
+    fields = ['title', 'deck', 'category', 'image']
+    success_url = reverse_lazy('applicationByUserListView')
+
+    def form_valid(self, form):
+        form.instance.borrower = self.request.user
+        return super().form_valid(form)
+
+
+class ApplicationsDelete(DeleteView):
     model = Applications
     success_url = reverse_lazy('Applications')
     permission_required = 'MySite.can_mark_returned'

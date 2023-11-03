@@ -28,7 +28,7 @@
                 {% if user.is_authenticated %}
                 <li>Пользователь: {{ user.get_username }}</li>
 
-                <li><a href="applications.html">Мои заказы</a></li>
+                <li><a href="{% url 'applicationByUserListView' %}">Мои заказы</a></li>
 
                 <li><a href="{% url 'logout' %}?next={{ request.path }}">Выход</a></li>
                 {% else %}
