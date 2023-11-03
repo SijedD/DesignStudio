@@ -7,8 +7,7 @@ from .models import Category
 admin.site.register(Category)
 admin.site.register(AdvUser)
 
-
 @admin.register(Applications)
 class ApplicationsAdmin(admin.ModelAdmin):
-    list_display = ('title', 'deck', 'category', 'date_create', 'time_create', 'Status')
+    list_display = ('title', 'deck', 'category', 'date_create', 'time_create', 'status')
     model = Applications
